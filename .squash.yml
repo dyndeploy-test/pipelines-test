@@ -6,12 +6,16 @@ deployments:
       aws_secret_key: $SECRET_KEY
       region: us-east-2
     pipelines:
-      - default:
-          dockerimage: phusion/baseimage:0.9.18
-          build_steps:
-            - echo something
-            - apt-get install -y wget
-            - ls -la
-            - echo finished
+      - primary:
+          group_id: api
           scripts:
             - echo true
+      - next:
+          group_id: api
+          scripts:
+            - sleep 5; ls -la
+      - dependency:
+          group_id: app
+          depends_on_group: api
+          scripts:
+            - ls -la
