@@ -1,10 +1,6 @@
 deployments:
-  nodocker:
+  nginx:
     dockerimage: nginx
-    squash-cmd--aws-credentials:
-      aws_access_key: $ACCESS_KEY
-      aws_secret_key: $SECRET_KEY
-      region: us-east-2
     pipelines:
       - default:
           scripts:
@@ -12,3 +8,9 @@ deployments:
       - secondary:
           scripts:
             - sleep 30 && ls -la
+  apache:
+    dockerimage: httpd
+    pipelines:
+      - default:
+          scripts:
+            - echo 'something'
