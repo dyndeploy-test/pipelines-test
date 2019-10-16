@@ -6,23 +6,12 @@ deployments:
       aws_secret_key: $SECRET_KEY
       region: us-east-2
     pipelines:
-      - s3:
+      - default:
+          dockerimage: phusion/baseimage:0.9.18
+          build_steps:
+            - echo something
+            - apt-get install -y wget
+            - ls -la
+            - echo finished
           scripts:
-            - mkdir user-pics
-            - touch user-pics/filename
-            - squash-cmd--aws-s3-upload:
-                bucket: tfm-test-bucket
-                region: us-east-1
-                from_folder: user-pics
-                action: download
-                arguments: |
-                 --quiet  \
-                 --cache-control "max-age=11300"
-            - squash-cmd--aws-s3-upload:
-                bucket: tfm-test-bucket
-                region: us-east-1
-                from_folder: user-pics
-                to_folder: test-upload
-                arguments: |
-                 --quiet  \
-                 --cache-control "max-age=11300"
+            - echo true
