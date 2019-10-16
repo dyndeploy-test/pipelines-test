@@ -6,9 +6,23 @@ deployments:
       aws_secret_key: $SECRET_KEY
       region: us-east-2
     pipelines:
-      - default:
+      - s3:
           scripts:
-            - echo true
-      - secondary:
-          scripts:
-            - sleep 30 && ls -la
+            - mkdir user-pics
+            - touch user-pics/filename
+            - squash-cmd--aws-s3-upload:
+                bucket: tfm-test-bucket
+                region: us-east-1
+                from_folder: user-pics
+                action: download
+                arguments: |
+                 --quiet  \
+                 --cache-control "max-age=11300"
+            - squash-cmd--aws-s3-upload:
+                bucket: tfm-test-bucket
+                region: us-east-1
+                from_folder: user-pics
+                to_folder: test-upload
+                arguments: |
+                 --quiet  \
+                 --cache-control "max-age=11300"
