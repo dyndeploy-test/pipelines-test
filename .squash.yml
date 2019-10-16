@@ -7,8 +7,11 @@ deployments:
       region: us-east-2
     pipelines:
       - default:
+          dockerimage: phusion/baseimage:0.9.18
+          build_steps:
+            - echo something
+            - apt-get install -y wget
+            - ls -la
+            - echo finished
           scripts:
             - echo true
-      - secondary:
-          scripts:
-            - sleep 30 && ls -la
