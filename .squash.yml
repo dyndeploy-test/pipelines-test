@@ -13,4 +13,4 @@ deployments:
     pipelines:
       - default:
           scripts:
-            - echo 'something'
+            - echo 'something v2'
