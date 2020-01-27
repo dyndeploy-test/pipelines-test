@@ -13,7 +13,7 @@ deployments:
       - next:
           group_id: api
           scripts:
-            - sleep 10; ls -la
+            - sleep 11; ls -la
       - dependency:
           group_id: app
           depends_on_group: api
