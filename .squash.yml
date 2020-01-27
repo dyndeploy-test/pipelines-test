@@ -6,9 +6,16 @@ deployments:
       aws_secret_key: $SECRET_KEY
       region: us-east-2
     pipelines:
-      - default:
+      - primary:
+          group_id: api
           scripts:
             - echo true
-      - secondary:
+      - next:
+          group_id: api
           scripts:
-            - sleep 30 && ls -la
+            - sleep 11; ls -la
+      - dependency:
+          group_id: app
+          depends_on_group: api
+          scripts:
+            - ls -la
